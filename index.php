@@ -55,4 +55,21 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
         throw new \PDOException($e->getMessage(), (string)$e->getCode());
     }
 }
+?>
+<tbody>
+<thead>
+<tr>
+    <td>First name:</td>
+    <td>Last name:</td>
+    <td>Email:</td>
+    <td>Preferred Language</td>
+    <td>PersonalPage:</td>
+</tr>
+</thead>
+</tbody>
+<?php
+
+
+
+?>
 

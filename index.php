@@ -56,20 +56,33 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 ?>
-<tbody>
+<table>
 <thead>
+
 <tr>
     <td>First name:</td>
     <td>Last name:</td>
     <td>Email:</td>
-    <td>Preferred Language</td>
+    <td>Preferred Language:</td>
     <td>PersonalPage:</td>
 </tr>
 </thead>
-</tbody>
+<tbody>
 <?php
+$sqltable = 'SELECT first_name,last_name,email,preferred_language,video FROM student ORDER BY id';
 
+foreach ($connect-> query($sqltable)as $row):?>
 
+    <tr>
+        <td><?php echo $row['first_name'] ?></td>
+        <td><?php echo $row['last_name'] ?></td>
+        <td><?php echo $row['email'] ?></td>
+        <td><?php echo $row['preferred_language'] ?></td>
+        <td><?php echo $row['video'] ?></td>
 
-?>
+    </tr>
 
+<?php endforeach; ?>
+
+</tbody>
+</table>

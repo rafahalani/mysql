@@ -16,7 +16,7 @@ error_reporting(E_ALL);
     <title>Document</title>
 </head>
 <body class="text-center">
-//add action to the action
+
 <form action="" method="get">
     <h1>Welcome to our StudentBook</h1>
 

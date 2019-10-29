@@ -19,6 +19,6 @@ function openConnection() {
     // Why we do this here
     return $pdo;
 }
-
+$connect = openConnection();
 //Creating a New Database Connection
 //PDO

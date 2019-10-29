@@ -18,8 +18,8 @@ session_start();
 function whatIsHappening() {
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
-    echo '<h2>$_POST</h2>';
-    var_dump($_POST);
+//    echo '<h2>$_POST</h2>';
+//    var_dump($_POST);
     /*    echo '<h2>$_COOKIE</h2>';
         var_dump($_COOKIE);
         echo '<h2>$_SESSION</h2>';
@@ -27,32 +27,33 @@ function whatIsHappening() {
 }
 
 whatIsHappening();
-$connect = openConnection();
 
-if($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $first_name = $_GET['first_name'];
-    $last_name = $_GET['last_name'];
-    $username = $_GET ['username'];
-    $gender = $_GET ['gender'];
-    $linkedin = $_GET ['linkedin'];
-    $github = $_GET ['github'];
-    $email = $_GET ['email'];
-    $preferred_language = $_GET ['preferred_language'];
-    $avatar = $_GET ['avatar'];
-    $video = $_GET ['video'];
-    $quote = $_GET ['quote'];
-    $quote_author = $_GET ['quote_author'];
-   // $date = $_GET ['date'];
+if(!isset($_GET)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $first_name = $_GET['first_name'];
+        $last_name = $_GET['last_name'];
+        $username = $_GET ['username'];
+        $gender = $_GET ['gender'];
+        $linkedin = $_GET ['linkedin'];
+        $github = $_GET ['github'];
+        $email = $_GET ['email'];
+        $preferred_language = $_GET ['preferred_language'];
+        $avatar = $_GET ['avatar'];
+        $video = $_GET ['video'];
+        $quote = $_GET ['quote'];
+        $quote_author = $_GET ['quote_author'];
+        // $date = $_GET ['date'];
 //    $submit = $_GET ['submit'];
 
 
-    try {
-        $prepare = $connect->prepare ('INSERT INTO student (first_name, last_name, username, gender, linkedin, github, email, preferred_language, avatar, video, quote, quote_author ) VALUES (:first_name,:last_name,:username,:gender,:linkedin,:github,:email,:preferred_language,:avatar,:video,:quote,:quote_author)');
-       // echo $prepare;
-        $var = $prepare->execute([$first_name, $last_name, $username, $gender, $linkedin, $github, $email,$preferred_language, $avatar, $video,$quote ,$quote_author]);
-       // echo $var;
-    } catch (\PDOException $e) {
-        throw new \PDOException($e->getMessage(), (string)$e->getCode());
+        try {
+            $prepare = $connect->prepare('INSERT INTO student (first_name, last_name, username, gender, linkedin, github, email, preferred_language, avatar, video, quote, quote_author ) VALUES (:first_name,:last_name,:username,:gender,:linkedin,:github,:email,:preferred_language,:avatar,:video,:quote,:quote_author)');
+            // echo $prepare;
+            $var = $prepare->execute([$first_name, $last_name, $username, $gender, $linkedin, $github, $email, $preferred_language, $avatar, $video, $quote, $quote_author]);
+            // echo $var;
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (string)$e->getCode());
+        }
     }
 }
 ?>
@@ -65,11 +66,12 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
     <td>Email:</td>
     <td>Preferred Language:</td>
     <td>PersonalPage:</td>
+    <td>Profile:</td>
 </tr>
 </thead>
 <tbody>
 <?php
-$sqltable = 'SELECT first_name,last_name,email,preferred_language,video FROM student ORDER BY id';
+$sqltable = 'SELECT first_name,last_name,email,preferred_language,video,id FROM student ORDER BY id';
 
 foreach ($connect-> query($sqltable)as $row):?>
 
@@ -79,6 +81,7 @@ foreach ($connect-> query($sqltable)as $row):?>
         <td><?php echo $row['email'] ?></td>
         <td><?php echo $row['preferred_language'] ?></td>
         <td><?php echo $row['video'] ?></td>
+        <td><?php echo  $row['first_name'] . '<a href = "/profile.php?user='.$row['id'].'"> Profile</a>'; ?></td>
 
     </tr>
 
